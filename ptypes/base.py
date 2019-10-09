@@ -2,7 +2,6 @@ import abc
 import typing as t
 from functools import reduce
 
-from fn.func import identity
 
 A = t.TypeVar('A')
 B = t.TypeVar('B')
@@ -10,6 +9,10 @@ F = t.TypeVar('F', bound=t.Callable)
 
 
 __all__ = ['Parametric', 'Monoid', 'Functor', 'Applicative', 'Monad']
+
+
+def identity(x: A) -> A:
+    return x
 
 
 class Parametric(metaclass=abc.ABCMeta):

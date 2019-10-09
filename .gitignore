@@ -1,4 +1,9 @@
 # Created by .ignore support plugin (hsz.mobi)
+
+# JetBrains
+
+.idea
+
 ### Linux template
 *~
 
