@@ -10,6 +10,7 @@ M = t.TypeVar('M', bound=Monoid)
 __all__ = ['Writer']
 
 
+# TODO implement applicative
 class Writer(t.Generic[M, A], Parametric, Functor, Monad):
 
     __param__ = None

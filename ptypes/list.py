@@ -12,6 +12,7 @@ B = t.TypeVar('B')
 __all__ = ['List']
 
 
+# TODO implement Applicative
 # TODO replace built-in list with a persistent data structure
 class List(t.Generic[A], Functor, Monad, metaclass=abc.ABCMeta):
 
