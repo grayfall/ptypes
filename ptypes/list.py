@@ -3,7 +3,7 @@ import typing as t
 import itertools as it
 from functools import partial
 
-from ptypes.base import Applicative, Functor, Monad
+from ptypes.base import Applicative, Functor, Monad, Monoid
 
 A = t.TypeVar('A')
 B = t.TypeVar('B')
@@ -12,15 +12,26 @@ B = t.TypeVar('B')
 __all__ = ['List']
 
 
-# TODO implement Applicative
 # TODO replace built-in list with a persistent data structure
-class List(t.Generic[A], Functor, Monad, metaclass=abc.ABCMeta):
+class List(t.Generic[A], Monoid, Functor, Applicative, Monad):
 
     def __init__(self, iterable: t.Iterable[A]):
         self._values = list(iterable)
 
+    @classmethod
+    def mempty(cls):
+        return cls([])
+
+    def mappend(self, value: A) -> 'List[A]':
+        return type(self)(it.chain(self, [value]))
+
     def fmap(self, f: t.Callable[[A], B]) -> 'List[B]':
         return type(self)(map(f, self))
+
+    def amap(self, other: 'List[A]') -> 'List[B]':
+        return type(self)(
+            it.chain.from_iterable(other.fmap(f) for f in self)
+        )
 
     def bind(self, f: t.Callable[[A], 'List[B]']) -> 'List[B]':
         return type(self)(
@@ -28,8 +39,8 @@ class List(t.Generic[A], Functor, Monad, metaclass=abc.ABCMeta):
         )
 
     @classmethod
-    def unit(cls, *args, **kwargs) -> 'List[A]':
-        return cls([])
+    def unit(cls, value: A) -> 'List[A]':
+        return cls([value])
 
     def __len__(self):
         return len(self._values)
@@ -48,9 +59,6 @@ class List(t.Generic[A], Functor, Monad, metaclass=abc.ABCMeta):
 
     def __add__(self, other: 'List[A]') -> 'List[A]':
         return type(self)(it.chain(self, other))
-
-    def append(self, value: A) -> 'List[A]':
-        return type(self)(it.chain(self, [value]))
 
 
 if __name__ == '__main__':
