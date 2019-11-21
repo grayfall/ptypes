@@ -9,11 +9,11 @@ A = t.TypeVar('A')
 B = t.TypeVar('B')
 
 
-__all__ = ['List']
+__all__ = ['MList']
 
 
 # TODO replace built-in list with a persistent data structure
-class List(t.Generic[A], Monoid, Functor, Applicative, Monad):
+class MList(t.Generic[A], Monoid, Functor, Applicative, Monad):
 
     def __init__(self, iterable: t.Iterable[A]):
         self._values = list(iterable)
@@ -22,24 +22,24 @@ class List(t.Generic[A], Monoid, Functor, Applicative, Monad):
     def mempty(cls):
         return cls([])
 
-    def mappend(self, value: A) -> 'List[A]':
+    def mappend(self, value: A) -> 'MList[A]':
         return type(self)(it.chain(self, [value]))
 
-    def fmap(self, f: t.Callable[[A], B]) -> 'List[B]':
+    def fmap(self, f: t.Callable[[A], B]) -> 'MList[B]':
         return type(self)(map(f, self))
 
-    def amap(self, other: 'List[A]') -> 'List[B]':
+    def amap(self, other: 'MList[A]') -> 'MList[B]':
         return type(self)(
             it.chain.from_iterable(other.fmap(f) for f in self)
         )
 
-    def bind(self, f: t.Callable[[A], 'List[B]']) -> 'List[B]':
+    def bind(self, f: t.Callable[[A], 'MList[B]']) -> 'MList[B]':
         return type(self)(
             it.chain.from_iterable(map(f, self))
         )
 
     @classmethod
-    def unit(cls, value: A) -> 'List[A]':
+    def unit(cls, value: A) -> 'MList[A]':
         return cls([value])
 
     def __len__(self):
@@ -57,7 +57,7 @@ class List(t.Generic[A], Monoid, Functor, Applicative, Monad):
     def __str__(self):
         return str(self._values)
 
-    def __add__(self, other: 'List[A]') -> 'List[A]':
+    def __add__(self, other: 'MList[A]') -> 'MList[A]':
         return type(self)(it.chain(self, other))
 
 
