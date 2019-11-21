@@ -45,8 +45,8 @@ class List(t.Generic[A], Monoid, Functor, Applicative, Monad):
     def __len__(self):
         return len(self._values)
 
-    def __getitem__(self, item) -> t.Union[A, t.List[A]]:
-        return type(self)(self._values[item])
+    def __getitem__(self, item: t.Union[int, slice]) -> t.Union[A, t.List[A]]:
+        return type(self)(self._values[item]) if isinstance(item, slice) else self._values[item]
 
     def __iter__(self) -> t.Iterator[A]:
         return iter(self._values)
