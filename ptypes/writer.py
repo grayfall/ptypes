@@ -54,7 +54,7 @@ class Writer(Parametric, Functor, Monad, t.Generic[M, A]):
             __param__=(parameter,)
         )
 
-        return type(name, (Writer, t.Generic[A]), namespace)  # ignore type
+        return type(name, (cls,), namespace)  # ignore type
 
 
 if __name__ == '__main__':
