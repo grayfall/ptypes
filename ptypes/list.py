@@ -13,6 +13,8 @@ __all__ = ['MList']
 
 
 # TODO replace built-in list with a persistent data structure
+# TODO add concat (in general, we can define any monadic bind in terms of fmap followed by concat – rewrite the
+#      Functor -> Applicative -> Monad hierarchy to automatically derive operations)
 class MList(t.Generic[A], Monoid, Functor, Applicative, Monad):
 
     def __init__(self, iterable: t.Iterable[A]):
