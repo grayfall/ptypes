@@ -11,7 +11,7 @@ __all__ = ['Writer']
 
 
 # TODO implement applicative
-class Writer(t.Generic[M, A], Parametric, Functor, Monad):
+class Writer(Parametric, Functor, Monad, t.Generic[M, A]):
 
     __param__ = None
 
