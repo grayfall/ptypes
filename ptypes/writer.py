@@ -54,6 +54,8 @@ class Writer(Parametric, Functor, Monad, t.Generic[M, A]):
             __param__=(parameter,)
         )
 
+        # TODO this used to be `type(name, (cls, Generic[A]), namespace)`, but Python >= 3.7 prohibits dynamic generics:
+        #      find a way around the issue
         return type(name, (cls,), namespace)  # ignore type
 
 
