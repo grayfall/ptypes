@@ -11,7 +11,7 @@ B = t.TypeVar('B')
 __all__ = ['Maybe', 'Just', 'Nothing']
 
 
-class Maybe(t.Generic[A], Functor, Applicative, Monad, metaclass=abc.ABCMeta):
+class Maybe(Functor, Applicative, Monad, t.Generic[A], metaclass=abc.ABCMeta):
     """
     A Maybe func implementation
     """

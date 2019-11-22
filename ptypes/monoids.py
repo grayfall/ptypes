@@ -9,20 +9,7 @@ from ptypes.base import Monoid, Parametric
 
 A = t.TypeVar('A')
 
-__all__ = ['MList', 'DataFrameMonoid', 'MRows', 'MTuple', 'MStruct']
-
-
-class MList(list, Monoid):
-
-    @classmethod
-    def mempty(cls):
-        return cls()
-
-    def mappend(self, other: 'MList') -> 'MList':
-        return self + other
-
-    def __add__(self, other: 'MList') -> 'MList':
-        return type(self)(super().__add__(other))
+__all__ = ['DataFrameMonoid', 'MRows', 'MTuple', 'MStruct']
 
 
 class DataFrameMonoid(Monoid, metaclass=abc.ABCMeta):
