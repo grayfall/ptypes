@@ -41,7 +41,7 @@ class Writer(Parametric, Functor, Monad, t.Generic[M, A]):
         return self._value
 
     @classmethod
-    def create(cls, name: str, parameter=t.Type[M], *args, **kwargs) -> t.Type['Writer[M]']:
+    def create(cls, name: str, parameter: t.Type[M], *args, **kwargs) -> t.Type['Writer[M]']:
         """
         Create a parametrised Writer type
         """
